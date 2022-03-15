@@ -11,7 +11,22 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Balloon Navigation Bar',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xff161F35),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Color(0xff1da2ff),
+          selectedIconTheme: IconThemeData(
+            color: Colors.white,
+            size: 25.0,
+          ),
+          unselectedIconTheme: IconThemeData(
+            color: Color(0xff526187),
+            size: 25.0,
+          ),
+        ),
+      ),
       home: const HomeScreen(),
     );
   }
@@ -23,7 +38,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ballon Navigation Bar')),
+      backgroundColor: const Color(0xff273559),
+      appBar: AppBar(
+        backgroundColor: const Color(0xff161F35),
+        title: const Text('Ballon Navigation Bar'),
+      ),
       body: Column(),
       bottomNavigationBar: const BallonNavigationBar(),
     );

@@ -1,5 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// Balon butonu bulunduran ve bununla beraber 4 widget ile beraber bir navigation bardır.
+/// Balon buton animasyon içerir ve özelleştirilmesine izin verilir
+/// Fluuter'in sunduğu [BottomNavigationBarThemeData] Temayı destekler sadece bir kaç farklılık bulundurmaktadır.
+/// örneğin
+///
+/*
+
+     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xff161F35),             # Bottom barın arklaplan rengi
+          selectedItemColor: Colors.white,                # Balon buton ve itemlarının önplan rengi
+          unselectedItemColor: Color(0xff1da2ff),         # Balon butonun ve itemlarının arkaplan rengi
+          selectedIconTheme: IconThemeData(               # diğer 4 widgetin iconThemeDatası
+            color: Colors.white,
+            size: 25.0,
+          ),
+          unselectedIconTheme: IconThemeData(             # diğer 4 widgetin iconThemeDatası
+            color: Color(0xff526187),
+            size: 25.0,
+          ),
+        ),
+
+*/
+/// Tema örneğini anlamadıysanız [örnek]() koda bakabilirsiniz
 class BallonNavigationBar extends StatefulWidget {
   const BallonNavigationBar({Key? key}) : super(key: key);
 
