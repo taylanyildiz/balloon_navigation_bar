@@ -8,20 +8,23 @@ const _defaultColor = Color(0xff1da2ff);
 /// bu butonlar [solda] [sağda] ve [ortada] bulunur.
 /// her birinin tıklanma özelliği mevcuttur. Bu butonlarda animasyon sadece geçişlerde bulunur.
 /// ayrıca bu butonlara tıklandıktan sonra kaybolacak şekilde animsayon tersine işler.
-class BallonButton extends StatelessWidget {
-  const BallonButton({
+class ReproducibleWidget extends AnimatedWidget {
+  const ReproducibleWidget({
     Key? key,
     required this.icon,
     required this.onPress,
     required this.items,
     required this.itemOnPress,
+    required this.animation,
     Color? backgroundColor,
   })  : assert(
           items.length != 3,
           'sadece 3 widget koymak zorundasınız',
         ),
         backgroundColor = backgroundColor ?? _defaultColor,
-        super(key: key);
+        super(key: key, listenable: animation);
+
+  final Animation<double> animation;
 
   /// Bu widget balon butonun ortasında yer alır
   /// sığacak şekilde widget eklenmesi tavsiye edilir.
@@ -29,7 +32,7 @@ class BallonButton extends StatelessWidget {
   final Widget icon;
 
   /// Balon butonuna tıklandıktan sonra tetiklenen metodtur.
-  final Function onPress;
+  final Function() onPress;
 
   /// Balon butonuna tıklandıktan sonra çıkacak olan butonlardır.
   /// her birinin genişlik ve yüksekliği eşittir tek widget koymanız tavsiye edilir.
@@ -47,6 +50,57 @@ class BallonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Material(
+      color: Colors.transparent,
+      child: GestureDetector(
+        onTap: onPress,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: backgroundColor,
+          ),
+          height: 120.0,
+          width: 120.0,
+          child: CustomPaint(
+            painter: _BallonPainter(repaint: animation),
+            child: icon,
+          ),
+        ),
+      ),
+    );
   }
+}
+
+class _BallonPainter extends CustomPainter {
+  _BallonPainter({
+    required this.repaint,
+  }) : super(repaint: repaint);
+  final Animation<double> repaint;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double width = size.width;
+    double height = size.height;
+
+    Paint paint = Paint()
+      ..strokeWidth = 5.0
+      ..style = PaintingStyle.fill
+      ..color = Colors.red;
+
+    Paint liquid = Paint()
+      ..strokeWidth = 5.0
+      ..style = PaintingStyle.fill
+      ..color = Colors.red;
+
+    canvas.drawCircle(size.center(Offset.zero), 60.0, paint);
+    double radius = -30 * repaint.value;
+
+    Path path = Path();
+    path.moveTo(width / 2, 10.0);
+    path.quadraticBezierTo(radius, radius, 10.0, height / 2);
+    canvas.drawPath(path, liquid);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

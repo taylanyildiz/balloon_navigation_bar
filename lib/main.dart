@@ -1,3 +1,4 @@
+import 'package:balloon_navigation_bar/screens/home_screen.dart';
 import 'package:balloon_navigation_bar/src/ballon_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -27,13 +28,13 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      home: const NavigationScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class NavigationScreen extends StatelessWidget {
+  const NavigationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,15 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Ballon Navigation Bar'),
       ),
       body: Column(),
-      bottomNavigationBar: const BallonNavigationBar(),
+      bottomNavigationBar: BallonNavigationBar(
+        onPress: (value) => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        ),
+        items: const [],
+      ),
     );
   }
 }
